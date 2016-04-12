@@ -1,0 +1,10 @@
+#!/bin/bash
+docker run \
+    --rm=true \
+    -t \
+    -i \
+    --name elm \
+    -v $(dirname $SSH_AUTH_SOCK):$(dirname $SSH_AUTH_SOCK) \
+    -e SSH_AUTH_SOCK=$SSH_AUTH_SOCK \
+    -v $(pwd)/../:/workspace/base  \
+    elm chown -R $(id -u):$(id -g) $1

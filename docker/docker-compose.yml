@@ -1,0 +1,29 @@
+pollmonkey:
+  image: elm
+  hostname: pollmonkey
+  ports:
+    - "8000:8000"
+  working_dir: /var/www/pollmonkey/
+  volumes:
+    - ./../:/var/www/pollmonkey/
+    - ./../conf/vhost.conf:/etc/nginx/sites-enabled/vhost.con
+  extra_hosts:
+    - "pollmonkey.dev:127.0.0.1"
+  # links:
+  #   - elmAppDb:localhost
+  environment:
+    - TERM=xterm
+
+# elmAppDb:
+#   image: postgres:9.3
+#   hostname: elm_app_db
+#   expose:
+#     - "5432"
+#   ports:
+#     - "5432:5432"
+#   volumes:
+#     - ./../sql/schema.sql:/docker-entrypoint-initdb.d/1.sql
+#   env_file:
+#     - /etc/elm_app/.common
+#   environment:
+#     - TERM=xterm

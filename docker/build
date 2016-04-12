@@ -1,0 +1,4 @@
+#!/bin/bash
+export DOCKER_DEV_UID=$(id -u ${USER})
+cat Dockerfile.template | envsubst | docker build $@ -t elm -
+unset DOCKER_DEV_UID

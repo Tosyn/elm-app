@@ -1,0 +1,36 @@
+FROM ubuntu:14.04
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update \
+    && apt-get install -y software-properties-common \
+    && apt-get update \
+    && apt-get install -y npm \
+      nodejs-legacy \
+    	nginx \
+    	curl \
+    	wget \
+    	vim \
+    	git
+
+# install elm
+RUN npm install -g elm
+
+RUN useradd -m -d /workspace -s /bin/bash developer \
+    && chown -R developer:developer /workspace \
+    && adduser developer sudo
+
+RUN ln -sf /dev/stdout /var/log/nginx/access.log \
+    && ln -sf /dev/stderr /var/log/nginx/error.log
+
+RUN apt-get clean \
+    && apt-get -y autoremove \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/man/* /usr/src/*
+
+WORKDIR /workspace/base
+
+EXPOSE 8000
+
+CMD sudo elm package install -y && sudo elm reactor -p=8000
+#CMD sudo elm package install -y && sudo nginx -g "daemon off;"
+#CMD  sudo nginx -g "daemon off;"
