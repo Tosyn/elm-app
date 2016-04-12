@@ -3,17 +3,24 @@ FROM ubuntu:14.04
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update \
-    && apt-get install -y software-properties-common \
-    && apt-get update \
     && apt-get install -y npm \
-      nodejs-legacy \
-    	nginx \
+        nginx \
     	curl \
     	wget \
     	vim \
     	git
 
-# install elm
+RUN dpkg-reconfigure locales
+RUN update-locale LANG=C.UTF-8
+RUN export LANG=C.UTF-8
+
+ENV LC_ALL C.UTF-8
+
+# Install nodejs: https://nodesource.com/blog/nodejs-v012-iojs-and-the-nodesource-linux-repositories/#installing-node-js-v0-12
+RUN curl -sL https://deb.nodesource.com/setup_0.12 | sudo bash - \
+    && apt-get install -y nodejs
+
+# Install elm: using node package manager
 RUN npm install -g elm
 
 RUN useradd -m -d /workspace -s /bin/bash developer \
@@ -33,4 +40,3 @@ EXPOSE 8000
 
 CMD sudo elm package install -y && sudo elm reactor -p=8000
 #CMD sudo elm package install -y && sudo nginx -g "daemon off;"
-#CMD  sudo nginx -g "daemon off;"
