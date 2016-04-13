@@ -1,6 +1,13 @@
 module Main where
 
-import Html exposing (text)
+-- import Counter exposing (update, view)
+-- import CounterPair exposing (init, update, view)
+import CounterList exposing (init, update, view)
+import StartApp.Simple exposing (start)
 
 main =
-    text "Hello, Elm"
+  start
+    { model = init
+    , update = update
+    , view = view
+    }

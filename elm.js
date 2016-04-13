@@ -10312,7 +10312,7 @@ Elm.Counter.make = function (_elm) {
    var Increment = {ctor: "Increment"};
    var view = F2(function (address,model) {
       return A2($Html.div,
-      _U.list([$Html$Attributes.$class("content")]),
+      _U.list([]),
       _U.list([A2($Html.button,_U.list([A2($Html$Events.onClick,address,Decrement)]),_U.list([$Html.text("-")]))
               ,A2($Html.div,_U.list([countStyle]),_U.list([$Html.text($Basics.toString(model))]))
               ,A2($Html.button,_U.list([A2($Html$Events.onClick,address,Increment)]),_U.list([$Html.text("+")]))]));

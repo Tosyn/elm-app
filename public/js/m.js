@@ -10344,26 +10344,23 @@ Elm.CounterList.make = function (_elm) {
            var newCounters = A2($Basics._op["++"],model.counters,_U.list([newCounter]));
            return _U.update(model,{counters: newCounters,nextID: model.nextID + 1});
          case "Remove": return _U.update(model,{counters: A2($List.drop,1,model.counters)});
-         case "Modify": var updateCounter = function (_p1) {
+         default: var updateCounter = function (_p1) {
               var _p2 = _p1;
               var _p4 = _p2._1;
               var _p3 = _p2._0;
               return _U.eq(_p3,_p0._0) ? {ctor: "_Tuple2",_0: _p3,_1: A2($Counter.update,_p0._1,_p4)} : {ctor: "_Tuple2",_0: _p3,_1: _p4};
            };
-           return _U.update(model,{counters: A2($List.map,updateCounter,model.counters)});
-         default: return {counters: _U.list([]),nextID: 0};}
+           return _U.update(model,{counters: A2($List.map,updateCounter,model.counters)});}
    });
-   var Reset = {ctor: "Reset"};
    var Modify = F2(function (a,b) {    return {ctor: "Modify",_0: a,_1: b};});
    var viewCounter = F2(function (address,_p5) {    var _p6 = _p5;return A2($Counter.view,A2($Signal.forwardTo,address,Modify(_p6._0)),_p6._1);});
    var Remove = {ctor: "Remove"};
    var Insert = {ctor: "Insert"};
    var view = F2(function (address,model) {
-      var reset = A2($Html.button,_U.list([A2($Html$Events.onClick,address,Reset),$Html$Attributes.$class("reset-button")]),_U.list([$Html.text("Reset")]));
-      var insert = A2($Html.button,_U.list([A2($Html$Events.onClick,address,Insert)]),_U.list([$Html.text("Add")]));
-      var remove = A2($Html.button,_U.list([A2($Html$Events.onClick,address,Remove)]),_U.list([$Html.text("Remove")]));
+      var insert = A2($Html.button,_U.list([A2($Html$Events.onClick,address,Insert),$Html$Attributes.$class("content")]),_U.list([$Html.text("Add")]));
+      var remove = A2($Html.button,_U.list([A2($Html$Events.onClick,address,Remove),$Html$Attributes.$class("content")]),_U.list([$Html.text("Remove")]));
       var counters = A2($List.map,viewCounter(address),model.counters);
-      return A2($Html.div,_U.list([]),A2($Basics._op["++"],_U.list([remove,insert,reset]),counters));
+      return A2($Html.div,_U.list([]),A2($Basics._op["++"],_U.list([remove,insert]),counters));
    });
    var init = {counters: _U.list([]),nextID: 0};
    var Model = F2(function (a,b) {    return {counters: a,nextID: b};});
@@ -10373,7 +10370,6 @@ Elm.CounterList.make = function (_elm) {
                                     ,Insert: Insert
                                     ,Remove: Remove
                                     ,Modify: Modify
-                                    ,Reset: Reset
                                     ,update: update
                                     ,view: view
                                     ,viewCounter: viewCounter};
