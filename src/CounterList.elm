@@ -12,14 +12,15 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 
+{-| ID -}
+type alias ID = Int
+
 {-| Model -}
 type alias Model =
   { counters : List ( ID, Counter.Model )
   , nextID : ID
   }
 
-{-| ID -}
-type alias ID = Int
 
 {-| init -}
 init : Model
